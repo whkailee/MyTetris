@@ -17,8 +17,10 @@ import com.example.mytetris.domain.TetrisBlock
 fun GameUi(
     currentScore: Int,
     bestScore: Int,
-    tetrisBlockInFlight: TetrisBlock,
-    maxIndex: BlockIndex
+    tetrisBlockInFlight: TetrisBlock?,
+    tetrisBlockLanded: TetrisBlock?,
+    maxIndex: BlockIndex,
+    moveCount: Int
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -54,6 +56,7 @@ fun GameUi(
         Box(modifier = Modifier.padding(it)) {
             GameCanvas(
                 tetrisBlockInFlight = tetrisBlockInFlight,
+                tetrisBlockLanded = tetrisBlockLanded,
                 maxIndex = maxIndex
             )
         }

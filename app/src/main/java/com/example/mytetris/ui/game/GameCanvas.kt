@@ -15,7 +15,8 @@ import kotlin.math.min
 @Composable
 fun GameCanvas(
     modifier: Modifier = Modifier,
-    tetrisBlockInFlight: TetrisBlock,
+    tetrisBlockInFlight: TetrisBlock?,
+    tetrisBlockLanded: TetrisBlock?,
     maxIndex: BlockIndex
 ) {
     Canvas(
@@ -25,6 +26,11 @@ fun GameCanvas(
             .border(2.dp, Color.White)
     ) {
         val blockSize = min(size.width / maxIndex.x, size.height / maxIndex.y)
-        drawTetrisBlock(tetrisBlockInFlight, blockSize)
+        if (tetrisBlockInFlight != null) {
+            drawTetrisBlock(tetrisBlockInFlight, blockSize)
+        }
+        if (tetrisBlockLanded != null) {
+            drawTetrisBlock(tetrisBlockLanded, blockSize)
+        }
     }
 }

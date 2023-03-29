@@ -7,6 +7,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.mytetris.ui.game.GameUi
 import com.example.mytetris.ui.theme.MyTetrisTheme
@@ -22,6 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val moveCount by viewModel.moveCount.collectAsState()
             MyTetrisTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -32,10 +36,22 @@ class MainActivity : ComponentActivity() {
                         currentScore = viewModel.currentScore,
                         bestScore = viewModel.bestScore,
                         tetrisBlockInFlight = viewModel.tetrisBlockInFlight,
-                        maxIndex = viewModel.maxIndex
+                        tetrisBlockLanded = viewModel.tetrisBlockLanded,
+                        maxIndex = viewModel.maxIndex,
+                        moveCount = moveCount
                     )
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.resumeGame()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.pauseGame()
     }
 }

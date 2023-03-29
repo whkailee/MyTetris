@@ -2,7 +2,7 @@ package com.example.mytetris.domain
 
 import androidx.compose.ui.graphics.Color
 
-class TetrisBlock(val shape: List<BlockIndex>, val position: BlockIndex, val color: Color) {
+class TetrisBlock(var shape: List<BlockIndex>, var position: BlockIndex, var color: Color) {
 
     companion object {
 
@@ -10,7 +10,7 @@ class TetrisBlock(val shape: List<BlockIndex>, val position: BlockIndex, val col
             return shapeVariants.random().let {
                 TetrisBlock(
                     shape = it.first,
-                    position = BlockIndex((1 until width - 1).random(), 0),
+                    position = BlockIndex((1 until width - 1).random(), 1),
                     color = it.second
                 )
             }
@@ -36,3 +36,8 @@ class TetrisBlock(val shape: List<BlockIndex>, val position: BlockIndex, val col
     }
 }
 
+fun TetrisBlock.getRealPositionShapeList(): List<BlockIndex> {
+    return shape.map {
+        BlockIndex(it.x + position.x, it.y + position.y)
+    }
+}
