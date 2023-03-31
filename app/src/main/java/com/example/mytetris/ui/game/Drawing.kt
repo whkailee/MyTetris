@@ -19,11 +19,13 @@ import com.example.mytetris.domain.plus
 
 
 fun DrawScope.drawTetrisBlock(
+    topLeft: Offset,
     tetrisBlock: TetrisBlock,
     blockSize: Float
 ) {
     for (blockIndex in tetrisBlock.shape) {
         drawBlock(
+            topLeft = topLeft,
             coordinate = blockIndex + tetrisBlock.position,
             blockSize = blockSize,
             color = tetrisBlock.color
@@ -32,6 +34,7 @@ fun DrawScope.drawTetrisBlock(
 }
 
 fun DrawScope.drawBlock(
+    topLeft: Offset,
     coordinate: BlockIndex,
     blockSize: Float,
     color: Color,
@@ -39,8 +42,8 @@ fun DrawScope.drawBlock(
     stroke: Dp = 1.dp
 ) {
     val actualLocation = Offset(
-        coordinate.x * blockSize,
-        coordinate.y * blockSize
+        coordinate.x * blockSize + topLeft.x,
+        coordinate.y * blockSize + topLeft.y
     )
     val borderWidth = blockSize / 8
     drawTriangle(
@@ -86,6 +89,7 @@ fun DrawScope.drawTriangle(color: Color, point1: Offset, point2: Offset, point3:
 fun PreviewDrawBlock() {
     Canvas(modifier = Modifier.size(200.dp)) {
         drawTetrisBlock(
+            topLeft = Offset(0f, 0f),
             tetrisBlock = TetrisBlock(
                 shape = listOf(BlockIndex(0, 0), BlockIndex(1, 0), BlockIndex(1, 1), BlockIndex(1, 2)),
                 position = BlockIndex(0, 0),

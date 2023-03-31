@@ -41,3 +41,9 @@ fun TetrisBlock.getRealPositionShapeList(): List<BlockIndex> {
         BlockIndex(it.x + position.x, it.y + position.y)
     }
 }
+
+fun TetrisBlock.rotate() {
+    shape = shape.map {
+        BlockIndex(it.y, it.x * -1)
+    }
+}

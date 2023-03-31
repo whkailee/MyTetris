@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.mytetris.ui.game.GameUi
 import com.example.mytetris.ui.theme.MyTetrisTheme
@@ -38,8 +37,11 @@ class MainActivity : ComponentActivity() {
                         tetrisBlockInFlight = viewModel.tetrisBlockInFlight,
                         tetrisBlockLanded = viewModel.tetrisBlockLanded,
                         maxIndex = viewModel.maxIndex,
-                        moveCount = moveCount
-                    )
+                        moveCount = moveCount,
+                        onTap = { viewModel.onTap() }
+                    ) {
+                        return@GameUi viewModel.onMove(it)
+                    }
                 }
             }
         }
